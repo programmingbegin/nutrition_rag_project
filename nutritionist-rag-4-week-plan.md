@@ -14,7 +14,9 @@
 User profile (age, height, weight, diet, sleep)
         │
         ├──────────────► Metrics tool (BMI, calorie need — LangChain Tool, deterministic math)
-        │                         │
+        │
+        ├──────────────► Nutrient lookup tool (food → calories/protein/fat/carbs, exact table lookup)
+        │
         └──────────────► Retriever (hybrid: BM25 + vector search)
                                   │
                           Vector store (Chroma — chunked guideline docs)
@@ -26,7 +28,9 @@ User profile (age, height, weight, diet, sleep)
                   Response (advice + sources + disclaimer)
 ```
 
-Key design decision: user profile data is **not retrieved**, it's structured input. It flows through a deterministic calculation tool (BMI, Mifflin-St Jeor calorie formula) rather than being left to the LLM to compute — and it's used to construct the retrieval query so the guidelines pulled back are relevant to that specific profile.
+Key design decision: user profile data is **not retrieved**, it's structured input. It flows through two deterministic tools — a metrics calculator (BMI, Mifflin-St Jeor calorie formula) and a nutrient lookup table (exact food → macro/calorie values) — rather than being left to the LLM to compute or recall from memory. It's also used to construct the retrieval query so the guidelines pulled back are relevant to that specific profile.
+
+**Why a third tool for nutrient lookup:** food composition data (e.g. "1 large egg has ~70 kcal, 6g protein") is exact tabular data, not something to embed and semantically retrieve — and not something an LLM should be trusted to recall precisely. It belongs in a structured table (SQLite/pandas), queried directly, the same way the metrics tool avoids LLM arithmetic. This is the difference between *retrieval* (fuzzy, semantic, for guideline prose) and *lookup* (exact, tabular, for nutrient facts) — both are "grounding," but they need different mechanisms.
 
 ---
 
@@ -35,7 +39,8 @@ Key design decision: user profile data is **not retrieved**, it's structured inp
 Learn just enough theory to start, then build in parallel.
 
 - **Days 1–2:** Core concepts — embeddings, chunking strategies, vector search (ANN/HNSW), the retrieve → augment → generate loop, and common failure modes (retrieval misses, context limits, hallucination despite retrieval)
-- **Days 2–4:** Collect & clean nutrition guideline documents (USDA Dietary Guidelines, USDA FoodData Central, WHO nutrition/sleep guidelines). Chunk with `RecursiveCharacterTextSplitter` (~500 tokens, 50 overlap). Embed with `text-embedding-3-small` and store in Chroma.
+- **Days 2–4:** Collect & clean nutrition guideline documents (Dietary Guidelines for Americans 2025–2030, WHO nutrition/sleep guidelines). Chunk with `RecursiveCharacterTextSplitter` (~500 tokens, 50 overlap). Embed with `text-embedding-3-small` and store in Chroma.
+- **Day 4:** Set up the nutrient lookup table — start with a lightweight Kaggle CSV of common foods for quick iteration, with a plan to swap in USDA FNDDS/SR Legacy data once the pipeline works end-to-end.
 - **Days 5–7:** Basic retrieval + generation working end-to-end.
 
 **Goal by end of week:** Ask "how much protein does an adult need daily?" and get a grounded, cited answer.
@@ -48,8 +53,9 @@ The differentiator of this project — give it the most room while momentum is f
 
 - Build the profile schema (age, height, weight, diet, sleep hours)
 - Build the metrics tool (BMI calculator, Mifflin-St Jeor calorie equation) as a **LangChain Tool**, not LLM-computed math
-- Wire up a LangChain agent combining the metrics tool + retriever
-- Tune prompt construction so retrieved guideline chunks + calculated metrics merge into one coherent, cited response
+- Build the nutrient lookup tool (food name + serving size → calories/protein/fat/carbs from the SQLite/pandas table), also as a **LangChain Tool**, not LLM-recalled data
+- Wire up a LangChain agent combining the metrics tool + nutrient lookup tool + retriever
+- Tune prompt construction so retrieved guideline chunks + calculated metrics + looked-up nutrient facts merge into one coherent, cited response
 - In parallel: start drafting a ~15–20 profile evaluation test set (with expected guideline citations) so it's ready for Week 3
 
 **Known risk:** this week tends to run long because getting the agent to blend calculated metrics with retrieved text coherently takes more prompt iteration than expected. Budget slack here if possible.

@@ -1,0 +1,21 @@
+food_name,serving_description,serving_grams,calories,protein_g,fat_g,carbs_g,fiber_g,sugar_g,sodium_mg
+"Egg, large",1 egg,50,72,6.3,4.8,0.4,0.0,0.2,71
+"Rice, white, cooked",1 cup,158,205,4.3,0.4,44.5,0.6,0.1,1.6
+"Rice, brown, cooked",1 cup,195,248,5.5,2.0,51.7,3.2,0.4,10
+"Chicken breast, cooked, skinless",3 oz (85g),85,140,26.7,3.0,0.0,0.0,0.0,63
+Banana,1 medium,118,105,1.3,0.4,27.0,3.1,14.4,1
+"Broccoli, cooked",1 cup,156,55,3.7,0.6,11.2,5.1,2.2,64
+"Salmon, cooked",3 oz (85g),85,175,18.8,10.5,0.0,0.0,0.0,52
+Whole milk,1 cup,244,149,7.7,7.9,11.7,0.0,12.3,105
+Almonds,1 oz (28g),28,164,6.0,14.2,6.1,3.5,1.2,0
+"Oats, rolled, dry",1/2 cup,40,150,5.0,2.7,27.0,4.0,1.0,0
+"Sweet potato, baked",1 medium,114,103,2.3,0.2,23.6,3.8,7.4,41
+"Greek yogurt, plain, nonfat",1 cup,245,130,23.0,0.7,9.0,0.0,9.0,80
+Avocado,1/2 fruit,68,114,1.3,10.5,6.0,4.6,0.4,5
+"Lentils, cooked",1 cup,198,230,17.9,0.8,39.9,15.6,3.6,4
+Peanut butter,2 tbsp,32,188,8.0,16.0,6.9,1.9,3.0,152
+"Bread, whole wheat",1 slice,28,69,3.6,0.9,11.6,1.9,1.4,132
+Olive oil,1 tbsp,14,119,0.0,13.5,0.0,0.0,0.0,0
+Apple,1 medium,182,95,0.5,0.3,25.1,4.4,18.9,2
+"Spinach, raw",1 cup,30,7,0.9,0.1,1.1,0.7,0.1,24
+"Ground beef, 90% lean, cooked",3 oz (85g),85,184,22.0,10.0,0.0,0.0,0.0,68
