@@ -16,10 +16,17 @@ cp .env.example .env             # then add your OPENAI_API_KEY
 
 ## Add your guideline documents
 
-Download the PDFs from the data source list (Dietary Guidelines for
-Americans 2025–2030, WHO fact sheets, CDC/Sleep Foundation sleep guidance)
-and place them in `data/guidelines/`. See `nutritionist-rag-4-week-plan.md`
-for the specific links.
+Two source types are supported:
+
+- **PDFs** — download the PDF guidelines (Dietary Guidelines for Americans
+  2025–2030, etc.) and place them directly in `data/guidelines/`.
+- **Web pages** — some sources are HTML, not PDF (e.g. WHO fact sheets,
+  CDC's sleep page). List these one per line in `data/guidelines/urls.txt`
+  (a starter file with the WHO/CDC links is already included; lines
+  starting with `#` are ignored, so you can comment sources in/out).
+
+Both are loaded, chunked, and embedded together by `ingestion.py`. See
+`nutritionist-rag-4-week-plan.md` for the full source list.
 
 ## Build the vector store
 
