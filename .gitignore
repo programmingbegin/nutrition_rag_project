@@ -1,0 +1,20 @@
+# Secrets
+.env
+
+# Virtual environments
+.venv/
+.venv-1/
+
+# Generated / regenerable data
+chroma_db/
+
+# Archives (raw downloads, already extracted into RAG_Data/)
+archive (7).zip
+files.zip
+
+# Python
+__pycache__/
+*.pyc
+
+# Stray pathlib artifact
+Path(__file__).parent.parent/

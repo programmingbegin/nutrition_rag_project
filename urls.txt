@@ -1,0 +1,7 @@
+# List one guideline URL per line. Lines starting with # are ignored.
+# These are HTML pages (not PDFs) that ingestion.py will fetch and chunk
+# alongside anything in this folder's PDFs.
+
+https://www.who.int/news-room/fact-sheets/detail/sodium-reduction
+https://www.cdc.gov/sleep/about/index.html
+https://www.thensf.org/how-many-hours-of-sleep-do-you-really-need/
